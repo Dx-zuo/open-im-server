@@ -194,8 +194,8 @@ func (m *msgServer) MarkConversationAsRead(ctx context.Context, req *msg.MarkCon
 			}
 			hasReadSeq = req.HasReadSeq
 		}
-		m.sendMarkAsReadNotification(ctx, req.ConversationID, constant.SingleChatType, req.UserID,
-			req.UserID, seqs, hasReadSeq)
+		m.sendMarkAsReadNotification(ctx, req.ConversationID, conversation.ConversationType, req.UserID,
+			m.conversationAndGetRecvID(conversation, req.UserID), seqs, hasReadSeq)
 	}
 
 	if conversation.ConversationType == constant.SingleChatType {
