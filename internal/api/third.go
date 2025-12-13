@@ -71,7 +71,13 @@ func setURLPrefix(c *gin.Context, urlPrefix *string) error {
 		Host:   c.Request.Host,
 		Path:   "/object/",
 	}
+	// 检查是否是 HTTPS 请求（直接 TLS 或通过代理）
 	if c.Request.TLS != nil {
+		u.Scheme = "https"
+	} else if proto := c.GetHeader("X-Forwarded-Proto"); proto != "" {
+		// Nginx 等代理会设置 X-Forwarded-Proto header
+		u.Scheme = proto
+	} else if c.GetHeader("X-Forwarded-Ssl") == "on" {
 		u.Scheme = "https"
 	}
 	*urlPrefix = u.String()
