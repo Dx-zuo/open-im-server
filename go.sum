@@ -16,8 +16,8 @@ firebase.google.com/go/v4 v4.14.1/go.mod h1:fgk2XshgNDEKaioKco+AouiegSI9oTWVqRaB
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Dx-zuo/protocol v0.0.73-alpha.17-fix h1:BLJVdfg7IeSx/NKkv1J/kWx/WSxaHe8HaIiPzt5dU4E=
 github.com/Dx-zuo/protocol v0.0.73-alpha.17-fix/go.mod h1:WF7EuE55vQvpyUAzDXcqg+B+446xQyEba0X35lTINmw=
-github.com/Dx-zuo/tools v0.0.0-20251213072753-366a9a315245 h1:kgz0zvwgwA3xvXeGTnl6dF2k3Z93S4mNAomN/uZRHu0=
-github.com/Dx-zuo/tools v0.0.0-20251213072753-366a9a315245/go.mod h1:fsbEzG1daTJNW/5pI6q45OP0k5ooMiZV+Qa0mwZAdP8=
+github.com/Dx-zuo/tools v0.0.0-20251213094110-f6e9ba43c3e1 h1:LR9RnUZ5AQ4paFl+EFrP8cH++EMpGqKQH+Qcu3XKfAU=
+github.com/Dx-zuo/tools v0.0.0-20251213094110-f6e9ba43c3e1/go.mod h1:fsbEzG1daTJNW/5pI6q45OP0k5ooMiZV+Qa0mwZAdP8=
 github.com/IBM/sarama v1.43.0 h1:YFFDn8mMI2QL0wOrG0J2sFoVIAFl7hS9JQi2YZsXtJc=
 github.com/IBM/sarama v1.43.0/go.mod h1:zlE6HEbC/SMQ9mhEYaF7nNLYOUyrs0obySKCckWP9BM=
 github.com/MicahParks/keyfunc v1.9.0 h1:lhKd5xrFHLNOWrDc4Tyb/Q1AJ4LCzQ48GVJyVIID3+o=

@@ -225,4 +225,6 @@ require (
 
 replace github.com/openimsdk/protocol => github.com/Dx-zuo/protocol v0.0.73-alpha.17-fix
 
-replace github.com/openimsdk/tools => github.com/Dx-zuo/tools v0.0.0-20251213072753-366a9a315245
+replace github.com/openimsdk/tools => github.com/Dx-zuo/tools v0.0.0-20251213094110-f6e9ba43c3e1
+
+// replace github.com/openimsdk/tools => ./openim-tools/tools
