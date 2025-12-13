@@ -43,6 +43,25 @@ func loadConfig(path string, envPrefix string, config any) error {
 		_ = v.BindEnv(key, fullEnvKey)
 	}
 
+	// 从环境变量中发现 YAML 文件中不存在的配置项
+	// 这允许通过环境变量添加新的配置项，而不需要修改 YAML 文件
+	envPrefixUpper := strings.ToUpper(envPrefix) + "_"
+	for _, env := range os.Environ() {
+		parts := strings.SplitN(env, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		envName := parts[0]
+		if !strings.HasPrefix(envName, envPrefixUpper) {
+			continue
+		}
+		// 将环境变量名转换为配置键：IMENV_OPENIM_RPC_THIRD_OBJECT_AWS_ENDPOINT -> object.aws.endpoint
+		keySuffix := strings.TrimPrefix(envName, envPrefixUpper)
+		configKey := strings.ToLower(strings.ReplaceAll(keySuffix, "_", "."))
+		// 绑定环境变量到配置键
+		_ = v.BindEnv(configKey, envName)
+	}
+
 	if err := v.Unmarshal(config, func(config *mapstructure.DecoderConfig) {
 		config.TagName = StructTagName
 	}); err != nil {
