@@ -327,14 +327,15 @@ type Kodo struct {
 }
 
 type Aws struct {
-	Endpoint        string `yaml:"endpoint"`        // 自定义端点，用于 S3 兼容存储（如 RustFS、MinIO 等）
-	Region          string `yaml:"region"`
-	Bucket          string `yaml:"bucket"`
-	BucketURL       string `yaml:"bucketURL"`       // 公开访问的 Bucket URL（可选）
-	AccessKeyID     string `yaml:"accessKeyID"`
-	SecretAccessKey string `yaml:"secretAccessKey"`
-	SessionToken    string `yaml:"sessionToken"`
-	PublicRead      bool   `yaml:"publicRead"`
+	Endpoint           string `yaml:"endpoint"`           // 自定义端点，用于 S3 兼容存储（如 RustFS、MinIO 等）
+	Region             string `yaml:"region"`
+	Bucket             string `yaml:"bucket"`
+	BucketURL          string `yaml:"bucketURL"`          // 公开访问的 Bucket URL（可选，用于生成外部访问链接）
+	AccessKeyID        string `yaml:"accessKeyID"`
+	SecretAccessKey    string `yaml:"secretAccessKey"`
+	SessionToken       string `yaml:"sessionToken"`
+	PublicRead         bool   `yaml:"publicRead"`
+	InsecureSkipVerify bool   `yaml:"insecureSkipVerify"` // 是否跳过 TLS 证书验证（用于自签名证书）
 }
 
 type User struct {
@@ -630,14 +631,15 @@ func (o *Kodo) Build() *kodo.Config {
 
 func (o *Aws) Build() *aws.Config {
 	return &aws.Config{
-		Endpoint:        o.Endpoint,
-		Region:          o.Region,
-		Bucket:          o.Bucket,
-		BucketURL:       o.BucketURL,
-		AccessKeyID:     o.AccessKeyID,
-		SecretAccessKey: o.SecretAccessKey,
-		SessionToken:    o.SessionToken,
-		PublicRead:      o.PublicRead,
+		Endpoint:           o.Endpoint,
+		Region:             o.Region,
+		Bucket:             o.Bucket,
+		BucketURL:          o.BucketURL,
+		AccessKeyID:        o.AccessKeyID,
+		SecretAccessKey:    o.SecretAccessKey,
+		SessionToken:       o.SessionToken,
+		PublicRead:         o.PublicRead,
+		InsecureSkipVerify: o.InsecureSkipVerify,
 	}
 }
 
