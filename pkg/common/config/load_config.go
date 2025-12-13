@@ -35,6 +35,14 @@ func loadConfig(path string, envPrefix string, config any) error {
 		return errs.WrapMsg(err, "failed to read config file", "path", path, "envPrefix", envPrefix)
 	}
 
+	// 显式绑定所有嵌套键的环境变量，解决 viper AutomaticEnv 对嵌套配置不生效的问题
+	// 例如：object.aws.bucketURL -> IMENV_OPENIM_RPC_THIRD_OBJECT_AWS_BUCKETURL
+	for _, key := range v.AllKeys() {
+		envKey := strings.ToUpper(strings.ReplaceAll(key, ".", "_"))
+		fullEnvKey := envPrefix + "_" + envKey
+		_ = v.BindEnv(key, fullEnvKey)
+	}
+
 	if err := v.Unmarshal(config, func(config *mapstructure.DecoderConfig) {
 		config.TagName = StructTagName
 	}); err != nil {
