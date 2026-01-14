@@ -202,6 +202,11 @@ type Notification struct {
 	ConversationSetPrivate    NotificationConfig `yaml:"conversationSetPrivate"`
 }
 
+// ReadReceiptStrategy 群聊已读回执推送策略配置
+type ReadReceiptStrategy struct {
+	EnableSenderOnlyPush bool `yaml:"enableSenderOnlyPush"` // 是否启用"只推送给发送者"优化
+}
+
 type Prometheus struct {
 	Enable bool  `yaml:"enable"`
 	Ports  []int `yaml:"ports"`
@@ -848,6 +853,7 @@ const (
 	OpenIMRPCMsgCfgFileName          = "openim-rpc-msg.yml"
 	OpenIMRPCThirdCfgFileName        = "openim-rpc-third.yml"
 	OpenIMRPCUserCfgFileName         = "openim-rpc-user.yml"
+	ReadReceiptStrategyFileName      = "read-receipt-strategy.yml"
 	RedisConfigFileName              = "redis.yml"
 	ShareFileName                    = "share.yml"
 	WebhooksConfigFileName           = "webhooks.yml"
@@ -939,4 +945,8 @@ func (s *Share) GetConfigFileName() string {
 
 func (w *Webhooks) GetConfigFileName() string {
 	return WebhooksConfigFileName
+}
+
+func (r *ReadReceiptStrategy) GetConfigFileName() string {
+	return ReadReceiptStrategyFileName
 }

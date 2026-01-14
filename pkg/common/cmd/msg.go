@@ -36,15 +36,16 @@ func NewMsgRpcCmd() *MsgRpcCmd {
 	var msgConfig msg.Config
 	ret := &MsgRpcCmd{msgConfig: &msgConfig}
 	ret.configMap = map[string]any{
-		config.OpenIMRPCMsgCfgFileName:  &msgConfig.RpcConfig,
-		config.RedisConfigFileName:      &msgConfig.RedisConfig,
-		config.MongodbConfigFileName:    &msgConfig.MongodbConfig,
-		config.KafkaConfigFileName:      &msgConfig.KafkaConfig,
-		config.ShareFileName:            &msgConfig.Share,
-		config.NotificationFileName:     &msgConfig.NotificationConfig,
-		config.WebhooksConfigFileName:   &msgConfig.WebhooksConfig,
-		config.LocalCacheConfigFileName: &msgConfig.LocalCacheConfig,
-		config.DiscoveryConfigFilename:  &msgConfig.Discovery,
+		config.OpenIMRPCMsgCfgFileName:      &msgConfig.RpcConfig,
+		config.RedisConfigFileName:          &msgConfig.RedisConfig,
+		config.MongodbConfigFileName:        &msgConfig.MongodbConfig,
+		config.KafkaConfigFileName:          &msgConfig.KafkaConfig,
+		config.ShareFileName:                &msgConfig.Share,
+		config.NotificationFileName:         &msgConfig.NotificationConfig,
+		config.WebhooksConfigFileName:       &msgConfig.WebhooksConfig,
+		config.LocalCacheConfigFileName:     &msgConfig.LocalCacheConfig,
+		config.DiscoveryConfigFilename:      &msgConfig.Discovery,
+		config.ReadReceiptStrategyFileName:  &msgConfig.ReadReceiptStrategy,
 	}
 	ret.RootCmd = NewRootCmd(program.GetProcessName(), WithConfigMap(ret.configMap))
 	ret.ctx = context.WithValue(context.Background(), "version", version.Version)
@@ -72,6 +73,7 @@ func (a *MsgRpcCmd) runE() error {
 			a.msgConfig.WebhooksConfig.GetConfigFileName(),
 			a.msgConfig.LocalCacheConfig.GetConfigFileName(),
 			a.msgConfig.Discovery.GetConfigFileName(),
+			a.msgConfig.ReadReceiptStrategy.GetConfigFileName(),
 		}, nil,
 		msg.Start)
 }

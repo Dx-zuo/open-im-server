@@ -229,6 +229,45 @@ func (m *msgServer) MarkConversationAsRead(ctx context.Context, req *msg.MarkCon
 }
 
 func (m *msgServer) sendMarkAsReadNotification(ctx context.Context, conversationID string, sessionType int32, sendID, recvID string, seqs []int64, hasReadSeq int64) {
+	// 群聊已读回执：只推送给消息发送者（需要配置开关启用）
+	if sessionType == constant.ReadGroupChatType && m.config.ReadReceiptStrategy.EnableSenderOnlyPush && hasReadSeq > 0 {
+		// 查询 hasReadSeq 对应的消息，获取发送者ID
+		_, _, msgs, err := m.MsgDatabase.GetMsgBySeqs(ctx, sendID, conversationID, []int64{hasReadSeq})
+		if err != nil {
+			log.ZWarn(ctx, "获取消息失败，降级为不推送", err,
+				"conversationID", conversationID,
+				"hasReadSeq", hasReadSeq,
+				"userID", sendID)
+			return
+		}
+
+		if len(msgs) == 0 {
+			log.ZWarn(ctx, "未找到消息，降级为不推送", nil,
+				"conversationID", conversationID,
+				"hasReadSeq", hasReadSeq)
+			return
+		}
+
+		// 获取消息发送者
+		msgSenderID := msgs[0].SendID
+		if msgSenderID == "" {
+			log.ZWarn(ctx, "消息发送者为空，降级为不推送", nil,
+				"conversationID", conversationID,
+				"hasReadSeq", hasReadSeq)
+			return
+		}
+
+		log.ZDebug(ctx, "群聊已读回执：只推送给消息发送者",
+			"conversationID", conversationID,
+			"msgSenderID", msgSenderID,
+			"readUserID", sendID,
+			"hasReadSeq", hasReadSeq)
+
+		// 修改 recvID 为消息发送者，sessionType 改为单聊类型
+		recvID = msgSenderID
+		sessionType = constant.SingleChatType
+	}
+
 	tips := &sdkws.MarkAsReadTips{
 		MarkAsReadUserID: sendID,
 		ConversationID:   conversationID,

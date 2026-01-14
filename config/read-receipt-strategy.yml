@@ -1,0 +1,6 @@
+# 群聊已读回执推送策略配置
+# Group chat read receipt push strategy configuration
+
+# 是否启用"只推送给发送者"优化：为 true 时，群聊已读回执只推送给消息发送者，不推送给所有成员
+# Enable sender-only push: when true, group chat read receipts only push to message sender
+enableSenderOnlyPush: true

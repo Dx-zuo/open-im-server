@@ -44,15 +44,16 @@ type MessageInterceptorFunc func(ctx context.Context, globalConfig *Config, req 
 type MessageInterceptorChain []MessageInterceptorFunc
 
 type Config struct {
-	RpcConfig          config.Msg
-	RedisConfig        config.Redis
-	MongodbConfig      config.Mongo
-	KafkaConfig        config.Kafka
-	NotificationConfig config.Notification
-	Share              config.Share
-	WebhooksConfig     config.Webhooks
-	LocalCacheConfig   config.LocalCache
-	Discovery          config.Discovery
+	RpcConfig            config.Msg
+	RedisConfig          config.Redis
+	MongodbConfig        config.Mongo
+	KafkaConfig          config.Kafka
+	NotificationConfig   config.Notification
+	Share                config.Share
+	WebhooksConfig       config.Webhooks
+	LocalCacheConfig     config.LocalCache
+	Discovery            config.Discovery
+	ReadReceiptStrategy  config.ReadReceiptStrategy // 群聊已读回执推送策略配置
 }
 
 // MsgServer encapsulates dependencies required for message handling.
